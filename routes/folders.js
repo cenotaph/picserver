@@ -53,7 +53,8 @@ const folderRoutes = (app, fs) => {
     for(let i = 0; i < fileList.length; i++) {
       let json = await readFile(dataPath + '/' + fileList[i])
       let j = JSON.parse(json)
-      let cover = {"title": j.title , "folder_name": j.folder_name, "cover_image": j.images[Math.floor(Math.random() * j.images.length)].filename, "description": j.description, "image_count": j.images.length }
+      let randomImage = j.images[Math.floor(Math.random() * j.images.length)]
+      let cover = {"title": j.title , "folder_name": j.folder_name,  "cover_image": randomImage.filename, "portrait": randomImage.portrait ? true : false, "description": j.description, "image_count": j.images.length }
       folders.push(cover)
     }
     // console.log(folders)
