@@ -50,11 +50,13 @@ const folderRoutes = (app, fs) => {
     let folders = []
     let promises = []
     const fileList = fs.readdirSync(dataPath)
+    
     for(let i = 0; i < fileList.length; i++) {
       let json = await readFile(dataPath + '/' + fileList[i])
       let j = JSON.parse(json)
+      let mtime = fs.statSync(dataPath + '/' + fileList[i]).mtime.getTime()
       let randomImage = j.images[Math.floor(Math.random() * j.images.length)]
-      let cover = {"title": j.title , "folder_name": j.folder_name,  "cover_image": randomImage.filename, "portrait": randomImage.portrait ? true : false, "description": j.description, "image_count": j.images.length }
+      let cover = {"title": j.title , "mtime":  mtime, "folder_name": j.folder_name,  "cover_image": randomImage.filename, "portrait": randomImage.portrait ? true : false, "description": j.description, "image_count": j.images.length }
       folders.push(cover)
     }
     // console.log(folders)
